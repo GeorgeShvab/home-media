@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: home-media-test
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_DB: home-media-test
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db-backup:/db-backup
+    post_start: 
+      - command: "bash /db-backup/restore.sh"
+
+  server:
+    build: ./server
+    container_name: home-media-server
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 5000:5000
+    env_file:
+      - ./server/.env
+    volumes:
+      - movie-storage:/app/storage
+
+  client:
+    build: ./client
+    container_name: home-media-client
+    restart: always
+    depends_on:
+      - db
+      - server
+    ports:
+      - 3000:3000
+
+volumes:
+  movie-storage:
+  pgdata:

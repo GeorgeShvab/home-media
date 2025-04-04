@@ -1,0 +1,31 @@
+.container {
+  margin: 0 auto;
+  max-width: 1560px;
+  padding: 0 30px;
+}
+
+:root {
+  font-family: 'Roboto', sans-serif;
+  font-optical-sizing: auto;
+  line-height: 1.3 !important;
+}
+
+* {
+  font-family: inherit;
+  line-height: inherit !important;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #242428;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+
+  & > *:nth-child(2) {
+    flex-grow: 3;
+  }
+}

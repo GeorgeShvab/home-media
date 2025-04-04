@@ -1,0 +1,11 @@
+.player {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.watch-movie-page__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 70px - 70px);
+}

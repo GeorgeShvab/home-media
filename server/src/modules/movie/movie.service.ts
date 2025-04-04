@@ -14,15 +14,45 @@ class MovieService {
   }
 
   async getById(id: number) {
-    return this.db.query.movies.findFirst({
-      where: eq(this.MovieModel.schema.id, id)
-    })
+    return this.db.query.movies
+      .findFirst({
+        where: eq(this.MovieModel.schema.id, id),
+        with: {
+          sources: true,
+          genres: {
+            columns: {
+              movieId: false,
+              genreId: false
+            },
+            with: { genre: { columns: { name: true } } }
+          }
+        }
+      })
+      .then((res) => ({
+        ...res,
+        genres: res?.genres.map((item) => item.genre.name)
+      }))
   }
 
   async getBySlug(slug: string) {
-    return this.db.query.movies.findFirst({
-      where: eq(this.MovieModel.schema.slug, slug)
-    })
+    return this.db.query.movies
+      .findFirst({
+        where: eq(this.MovieModel.schema.slug, slug),
+        with: {
+          sources: true,
+          genres: {
+            columns: {
+              movieId: false,
+              genreId: false
+            },
+            with: { genre: { columns: { name: true } } }
+          }
+        }
+      })
+      .then((res) => ({
+        ...res,
+        genres: res?.genres.map((item) => item.genre.name)
+      }))
   }
 
   async getIdBySlug(slug: string) {

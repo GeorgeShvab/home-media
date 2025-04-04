@@ -1,0 +1,39 @@
+.header {
+  background-color: #242428;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__logo-text {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 20px;
+  }
+}
+
+.header__searchbar {
+  background-color: rgb(24, 24, 27);
+  border-radius: 5px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+
+  &-input {
+    background-color: transparent;
+    outline: none;
+    color: #dddddd;
+    caret-color: #dddddd;
+    width: 370px;
+  }
+}

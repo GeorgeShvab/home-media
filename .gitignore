@@ -1,4 +1,5 @@
 .env*
 node_modules
-server/static/storage0988098817761776
+server/static/storage
+server/static/temp
 dist

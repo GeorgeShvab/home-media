@@ -1,0 +1,3 @@
+export const FETCH_MOVIE_QUERY_KEY = 'MOVIE'
+export const FETCH_SOURCES_QUERY_KEY = 'SOURCES'
+export const FETCH_SOURCE_QUERY_KEY = 'SOURCE'

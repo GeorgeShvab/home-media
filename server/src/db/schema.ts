@@ -1,5 +1,4 @@
 import { relations } from 'drizzle-orm'
-import { foreignKey } from 'drizzle-orm/pg-core'
 import {
   integer,
   pgTable,
@@ -32,14 +31,6 @@ export const characters = pgTable(
   (table) => [
     primaryKey({
       columns: [table.actorId, table.movieId]
-    }),
-    foreignKey({
-      columns: [table.movieId],
-      foreignColumns: [movies.id]
-    }),
-    foreignKey({
-      columns: [table.actorId],
-      foreignColumns: [actors.id]
     })
   ]
 )
@@ -78,7 +69,21 @@ export const movies = pgTable('movies', {
   backgroundImageOriginal: varchar({ length: 255 }).notNull(),
   smallCoverImage: varchar({ length: 255 }).notNull(),
   mediumCoverImage: varchar({ length: 255 }).notNull(),
-  largeCoverImage: varchar({ length: 255 }).notNull()
+  largeCoverImage: varchar({ length: 255 }).notNull(),
+  movieDbId: integer().notNull(),
+  adult: boolean().notNull(),
+  budget: bigint({ mode: 'number' }),
+  revenue: bigint({ mode: 'number' }),
+  homePage: varchar({ length: 255 }),
+  originCountry: varchar({ length: 255 }).array().notNull(),
+  popularity: decimal().notNull(),
+  productionCompanies: varchar({ length: 255 }).array().notNull(),
+  productionCountries: varchar({ length: 255 }).array().notNull(),
+  releaseDate: varchar({ length: 255 }).notNull(),
+  status: varchar({ length: 255 }).notNull(),
+  tagline: varchar({ length: 255 }),
+  voteAverage: decimal().notNull(),
+  voteCount: integer().notNull()
 })
 
 export const genres = pgTable('genres', {
@@ -86,19 +91,27 @@ export const genres = pgTable('genres', {
   name: varchar({ length: 255 }).notNull()
 })
 
-export const genresToMovies = pgTable('genres_to_movies', {
-  genreId: varchar({ length: 255 })
-    .references(() => genres.id)
-    .notNull(),
-  movieId: integer()
-    .references(() => movies.id)
-    .notNull()
-})
+export const genresToMovies = pgTable(
+  'genres_to_movies',
+  {
+    genreId: varchar({ length: 255 })
+      .references(() => genres.id)
+      .notNull(),
+    movieId: integer()
+      .references(() => movies.id)
+      .notNull()
+  },
+  (table) => [primaryKey({ columns: [table.movieId, table.genreId] })]
+)
 
 export const moviesRelations = relations(movies, ({ many }) => ({
   sources: many(sources),
   characters: many(characters),
-  genres: many(genres)
+  genres: many(genresToMovies)
+}))
+
+export const genresRelations = relations(genres, ({ many }) => ({
+  movies: many(genresToMovies)
 }))
 
 export const sourcesRelations = relations(sources, ({ one }) => ({

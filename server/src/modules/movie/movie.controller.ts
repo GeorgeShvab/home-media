@@ -5,9 +5,9 @@ import MovieService from './movie.service'
 class MovieController {
   constructor(private readonly MovieService: MovieService) {}
 
-  @Get('/:movieId')
-  async getMovie(@Param('movieId') id: number) {
-    const movie = await this.MovieService.getById(id)
+  @Get('/:slug')
+  async getMovie(@Param('slug') slug: string) {
+    const movie = await this.MovieService.getBySlug(slug)
 
     if (!movie) throw new NotFoundException()
 

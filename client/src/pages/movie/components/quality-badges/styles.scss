@@ -1,0 +1,14 @@
+.quality-badges {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 30px;
+
+  &__badge {
+    border-radius: 5px;
+    padding: 3px 6px;
+    font-size: 10px;
+    color: #121212;
+    font-weight: 700;
+    background-color: rgba($color: #ffffff, $alpha: 0.5);
+  }
+}
