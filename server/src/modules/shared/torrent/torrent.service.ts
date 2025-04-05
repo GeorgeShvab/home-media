@@ -10,9 +10,17 @@ import prettifyTorrentfileUrl from 'src/utils/prettify-torrent-file-path/prettif
 import getDirectories from 'src/utils/get-directories/get-directories'
 import getFilesInDir from 'src/utils/get-files-in-dir/get-files-in-dir'
 import getTorrentUrl from 'src/utils/get-torrent-url/get-torrent-url'
+import isVideo from 'src/utils/is-video/is-video'
+import path from "path"
 
 const isTrash = (extension: string) => {
   return extension === '.txt' || extension === '.jpg'
+}
+
+const getFileName = (name: string) => {
+  const extension = getExtension(name)
+  
+  return isVideo(extension) ? 'movie' + extension : name
 }
 
 interface Torrent {
@@ -46,17 +54,19 @@ class ActiveTorrent implements Torrent {
 
         if (isTrash(extension)) return
 
-        const relativePath = prettifyTorrentfileUrl(file.path, file.name)
+        const relativePath = prettifyTorrentfileUrl(file.path)
 
         const stream = file.createReadStream()
 
         const fullPath = getTorrentPath(this._hash, relativePath)
 
-        createDir(fullPath)
+        const fileName = getFileName(file.name)
 
-        this.fileUrl = getTorrentUrl(this._hash, relativePath)
+        this.fileUrl = getTorrentUrl(this._hash, path.join(relativePath, fileName))
 
-        stream.pipe(fs.createWriteStream(fullPath))
+        fs.mkdirSync(fullPath, { recursive: true })
+
+        stream.pipe(fs.createWriteStream(path.join(fullPath, fileName)))
       })
     })
 
@@ -137,6 +147,8 @@ class TorrentService {
 
   constructor() {
     fs.rmSync(getTempTorrentPath(), { recursive: true, force: true })
+    fs.rmSync(getTorrentPath(), { recursive: true, force: true })
+
     this._initialize()
   }
 
@@ -183,7 +195,19 @@ class TorrentService {
   }
 
   private _initialize() {
-    fs.mkdirSync(getTempTorrentPath())
+    if (!fs.existsSync("/storage")) {
+      fs.mkdirSync("/storage")
+    }
+
+    if (!fs.existsSync(getTempTorrentPath())) {
+      fs.mkdirSync(getTempTorrentPath())
+    }
+
+      if (!fs.existsSync(getTorrentPath())) {
+        fs.mkdirSync(getTorrentPath())
+      }
+
+
 
     const dirs = getDirectories(getTorrentPath())
 

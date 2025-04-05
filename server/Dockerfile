@@ -7,7 +7,7 @@ RUN npm i
 
 ENV ALL_MOVIES_LINK=https://yts.mx/api/v2/list_movies.json
 ENV MOVIE_LINK=https://yts.mx/api/v2/movie_details.json?with_images=true&with_cast=true
-ENV DATABASE_URL=postgresql://postgres:1111@localhost:5432/home-media
+ENV DATABASE_URL=postgresql://home-media-test:1111@postgres_db:5432/home-media-test
 ENV STORAGE_PREFIX=/app/storage/persisted
 ENV TEMP_STORAGE_PREFIX=/app/storage/temp
 ENV DOMAIN=localhost:5000
