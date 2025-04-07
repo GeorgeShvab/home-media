@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DB_URL="postgresql://home-media-test:1111@postgres_db:5432/home-media-test"
-DB_DUMP="/db-backup/db-dump.dump"
+DB_URL="postgresql://home-media-test:1111@127.0.0.1:5432/home-media-test"
+DB_DUMP="./db-dump.dump"
 
 echo "Checking for database dump..."
 if [ ! -f "$DB_DUMP" ]; then
@@ -10,7 +10,7 @@ if [ ! -f "$DB_DUMP" ]; then
 fi
 
 echo "Waiting for PostgreSQL to be ready..."
-until pg_isready -h postgres_db -p 5432 -U home-media-test; do
+until pg_isready -h 127.0.0.1 -p 5432 -U home-media-test; do
     sleep 5
 done
 
