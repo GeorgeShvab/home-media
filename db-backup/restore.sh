@@ -21,7 +21,7 @@ if [ "$ROLE_EXISTS" != "1" ]; then
     echo "Creating role 'postgres'..."
     psql "$DB_URL" -c "CREATE ROLE postgres WITH SUPERUSER LOGIN PASSWORD '1111';"
 else
-    echo "Role 'postgres' already exists."
+    echo "Role 'postgres' already exists." 
 fi
 
 echo "Restoring database from dump..."

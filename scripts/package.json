@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "populate": "tsx src/scripts/populate-db.ts",
-    "populate-genres": "tsx src/scripts/populate-genres.ts"
+    "populate-genres": "tsx src/scripts/populate-genres.ts",
+    "transfer": "tsx src/scripts/transfer.ts"
+
   },
   "author": "",
   "license": "ISC",

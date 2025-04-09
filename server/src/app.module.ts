@@ -11,8 +11,12 @@ import { ServeStaticModule } from '@nestjs/serve-static'
   imports: [
     ConfigModule.forRoot({ envFilePath: ['.env.local', '.env'] }),
     ServeStaticModule.forRoot({
-      rootPath: path.join(process.cwd(), 'static'),
+      rootPath: process.env.STORAGE_PREFIX,
       serveRoot: '/static'
+    },
+    {
+      rootPath: path.join(process.cwd(), 'static/client'),
+      serveRoot: '/'
     }),
     MovieModule,
     SourceModule
