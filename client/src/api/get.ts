@@ -1,7 +1,8 @@
 import {
   FETCH_MOVIE_ENDPOINT,
   GET_FETCH_SOURCE,
-  GET_FETCH_SOURCES_BY_MOVIE
+  GET_FETCH_SOURCES_BY_MOVIE,
+  GET_SEARCH
 } from '../constants/apiEndpoint'
 import axios from '../shell/axios'
 import { Movie, Source } from '../types/general'
@@ -21,3 +22,7 @@ export const fetchSource = (hash: string) => () =>
   axios
     .get<Source & { src: string }>(getQueryPath(GET_FETCH_SOURCE, hash))
     .then((res) => res.data)
+
+  export const fetchSearch = (q: string) => () => 
+    axios.get<Movie[]>(GET_SEARCH, { params: { q } })
+  .then(res => res.data)

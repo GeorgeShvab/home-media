@@ -17,7 +17,7 @@ const MoviePage: FC = () => {
 
   const { data } = useQuery({
     queryKey: [FETCH_MOVIE_QUERY_KEY],
-    queryFn: fetchMovie(params.slug)
+    queryFn: fetchMovie(params.slug),
   })
 
   console.log(data)
@@ -32,20 +32,20 @@ const MoviePage: FC = () => {
 
   return (
     <div>
-      <div className='movie-page__backdrop-layer' />
-      <img className='movie-page__backdrop-img' src={data.largeCoverImage} />
+      <div className="movie-page__backdrop-layer" />
+      <img className="movie-page__backdrop-img" src={data.largeCoverImage} />
 
-      <div className='container'>
-        <div className='movie-page__banner'>
-          <div className='movie-page__poster'>
+      <div className="container">
+        <div className="movie-page__banner">
+          <div className="movie-page__poster">
             <img
-              className='movie-page__poster-img'
+              className="movie-page__poster-img"
               src={data.largeCoverImage}
             />
           </div>
-          <div className='movie-page__main'>
+          <div className="movie-page__main">
             <Breadcrumbs movieTitle={data.title} />
-            <h2 className='movie-page__title'>{data.title}</h2>
+            <h2 className="movie-page__title">{data.title}</h2>
             <QualityBadges qualitiesList={qualities} />
             <div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
               <Button
@@ -59,7 +59,7 @@ const MoviePage: FC = () => {
                 Watch Now
               </Button>
               <Button
-                color='light'
+                color="light"
                 startIcon={
                   <AddIcon style={{ height: '20px', width: '20px' }} />
                 }
@@ -67,7 +67,7 @@ const MoviePage: FC = () => {
                 Load
               </Button>
             </div>
-            <p className='movie-page__description'>{data.description}</p>
+            <p className="movie-page__description">{data.description}</p>
           </div>
           <MovieDetails
             releaseDate={data.releaseDate}
@@ -80,8 +80,8 @@ const MoviePage: FC = () => {
           />
         </div>
       </div>
-      <div className='main-page__content'>
-        <div className='container' style={{ display: 'flex', gap: '40px' }}>
+      <div className="main-page__content">
+        <div className="container" style={{ display: 'flex', gap: '40px' }}>
           <Sources movieSlug={params.slug} />
           <div style={{ width: '400px' }}></div>
         </div>
