@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { MovieModel } from 'src/db/models'
-import { eq } from 'drizzle-orm'
+import { eq, ilike } from 'drizzle-orm'
 import db from 'src/db'
+import { movies } from 'src/db/schema'
 
 @Injectable()
 class MovieService {
@@ -61,6 +62,18 @@ class MovieService {
     })
 
     return movie?.id
+  }
+
+  async search(query: string) {
+    const movies = await this.db.query.movies.findMany({
+      where: ilike(this.MovieModel.schema.title, `%${query}%`),
+      limit: 15,
+      orderBy: (movies, {desc}) => [desc(movies.popularity)]
+    })
+
+    console.log(movies, query)
+
+    return movies
   }
 }
 

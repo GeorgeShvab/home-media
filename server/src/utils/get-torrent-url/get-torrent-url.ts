@@ -5,7 +5,7 @@ const DOMAIN = process.env.DOMAIN
 
 const getTorrentUrl = (hash: string = '', extra: string = '') => {
   const url = new URL(
-    path.join('http://' + DOMAIN, STORAGE_PREFIX, hash, extra)
+    ['http:/' + DOMAIN, "static", hash, extra].join("/")
   ).href
 
   return url
